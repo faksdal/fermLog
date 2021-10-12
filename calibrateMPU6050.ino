@@ -1,3 +1,6 @@
+
+
+
 void mpu6050::calibrateMPU6050(void)
 {
 	int32_t	gx, gy, gz, ax, ay, az;
@@ -22,10 +25,12 @@ void mpu6050::calibrateMPU6050(void)
 	
 	// TODO: discard the first hundred readings
 	for(int i = 0; i < CALIBRATION_READINGS; i++){
-		/*
-		if(i % 200 == 0)
-			lcd.print(".");
-		*/
+
+		if(__LCD_PRESENT__){
+			if(i % 150 == 0)
+				lcd.print(".");
+		}
+		
 
 		readMPU6050Data();
 		gx += rawGyroX;

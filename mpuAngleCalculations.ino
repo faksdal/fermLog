@@ -42,7 +42,10 @@ void mpu6050::mpuAngleCalculations(void)
 	rollAngleAcc	= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
 	yawAngleAcc		= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
 	
-	pitch	= (.9 * pitchAngleGyro) + (.1 * pitchAngleAcc);
+	pitch	= (.9996 * pitchAngleGyro) + (.0004 * pitchAngleAcc);
 	roll	= (.9 * rollAngleGyro) + (.1 * rollAngleAcc);
+
+	lcd.clear();
+	lcd.print(pitch);
 	
 }

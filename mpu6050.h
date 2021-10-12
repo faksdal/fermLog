@@ -84,8 +84,10 @@ public:
 	void	addCalibrationData(void);
 	void	mpuAngleCalculations(void);
 
-	/*
+	
 	// defining some inline functions so that we have access to the private data members
+	uint8_t	getMPUAddress(void){return mpu6050Address;}
+	/*
 	uint8_t	getMPUAddress(void) {return MPU_6050_ADDRESS;}
 	int16_t	getAccX(void)			{return accX;}
 	int16_t	getAccY(void)			{return accY;}
