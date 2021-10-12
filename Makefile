@@ -1,7 +1,7 @@
 PORT		= /dev/ttyUSB0
-DEVICE		= esp8266:esp8266:d1_mini_clone
+DEVICE		= esp8266:esp8266:d1_mini_pro
 BUILD_PATH	= ./build
-COMPILE		= arduino-cli compile --verbose --warnings all
+COMPILE		= arduino-cli compile  --warnings all
 UPLOAD		= arduino-cli upload
 SOURCE		= fermLog.ino
 
