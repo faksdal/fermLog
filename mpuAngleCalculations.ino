@@ -38,6 +38,8 @@ void mpu6050::mpuAngleCalculations(void)
 	// if we divide the output by [accSensitivityScalingFactor] we get the output in g
 	// these values, from the three axis', can now be used to determine the attitude of the sensor
 	//
+	// TODO: calculate angle with inverse tan y/x
+	//
 	pitchAngleAcc	= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
 	rollAngleAcc	= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
 	yawAngleAcc		= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
