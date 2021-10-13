@@ -13,3 +13,6 @@ compile:
 upload:
 	$(UPLOAD) --input-dir $(BUILD_PATH) --port $(PORT) --fqbn $(DEVICE)
 
+clean:
+	rm -rf build
+

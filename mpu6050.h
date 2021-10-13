@@ -67,7 +67,7 @@ class mpu6050{
 	float	angleAccX, angleAccY, angleAccZ, angleGyroX, angleGyroY, angleGyroZ;
 	float	totalVectorAcc;
 	float	pitch, roll, yaw;
-	float	pitchAngleGyro, rollAngleGyro, yawAngleGyro, pitchAngleAcc, rollAngleAcc, yawAngleAcc;
+	float	pitchAngleGyro, rollAngleGyro, yawAngleGyro, pitchAngleAcc, rollAngleAcc, yawAngleAcc, accTotalVector;
 	float	gyroSensitivityScalingFactor;
 
 	double	lastTime, currentTime, loopTime;

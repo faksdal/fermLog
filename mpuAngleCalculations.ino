@@ -40,14 +40,19 @@ void mpu6050::mpuAngleCalculations(void)
 	//
 	// TODO: calculate angle with inverse tan y/x
 	//
-	pitchAngleAcc	= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
-	rollAngleAcc	= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
-	yawAngleAcc		= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
-	
-	pitch	= (.9996 * pitchAngleGyro) + (.0004 * pitchAngleAcc);
-	roll	= (.9 * rollAngleGyro) + (.1 * rollAngleAcc);
+	//pitchAngleAcc	= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
+	//rollAngleAcc	= rawAccY / accSensitivityScalingFactor;	// this gives output in g's
+	//yawAngleAcc		= rawAccZ / accSensitivityScalingFactor;	// this gives output in g's
 
-	lcd.clear();
-	lcd.print(pitch);
+	accTotalVector	= sqrt((rawAccX*rawAccX) + (rawAccY*rawAccY) + (rawAccZ*rawAccZ));
+	pitchAngleAcc	= asin((float) rawAccY / accTotalVector) * (180.0/PI);
+	rollAngleAcc	= asin((float) rawAccX / accTotalVector) * (180.0/PI);
+	
+	pitch	= (.9999 * pitchAngleGyro) + (.0001 * pitchAngleAcc);
+	//pitch	= pitchAngleAcc;
+	//roll	= (.9 * rollAngleGyro) + (.1 * rollAngleAcc);
+
+	//lcd.clear();
+	Serial.println(pitch);
 	
 }
