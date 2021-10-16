@@ -38,7 +38,7 @@ void mpu6050::mpuAngleCalculations(void)
 	// if we divide the output by [accSensitivityScalingFactor] we get the output in g
 	// these values, from the three axis', can now be used to determine the attitude of the sensor
 	//
-	// TODO: calculate angle with inverse tan y/x
+	//
 	//
 	//pitchAngleAcc	= rawAccX / accSensitivityScalingFactor;	// this gives output in g's
 	//rollAngleAcc	= rawAccY / accSensitivityScalingFactor;	// this gives output in g's
@@ -48,11 +48,21 @@ void mpu6050::mpuAngleCalculations(void)
 	pitchAngleAcc	= asin((float) rawAccY / accTotalVector) * (180.0/PI);
 	rollAngleAcc	= asin((float) rawAccX / accTotalVector) * (180.0/PI);
 	
-	pitch	= (.9999 * pitchAngleGyro) + (.0001 * pitchAngleAcc);
+	pitch	= (.9996 * pitchAngleGyro) + (.0004 * pitchAngleAcc);
 	//pitch	= pitchAngleAcc;
 	//roll	= (.9 * rollAngleGyro) + (.1 * rollAngleAcc);
 
 	//lcd.clear();
-	Serial.println(pitch);
+	//Serial.print("pitchAngleAcc: ");
+	//Serial.print(pitchAngleAcc);
+	//Serial.print(" | pitchAngleGyro: ");
+	//Serial.print(pitchAngleGyro);
+	//Serial.print(" | pitch: ");
+	Serial.print("rawAccX: ");
+	Serial.print(rawAccX);
+	Serial.print(" | rawAccY: ");
+	Serial.print(rawAccY);
+	Serial.print(" | rawAccZ: ");
+	Serial.println(rawAccZ);
 	
 }

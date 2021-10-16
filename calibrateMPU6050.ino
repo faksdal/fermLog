@@ -53,10 +53,23 @@ void mpu6050::calibrateMPU6050(void)
 
 	//
 	// accelerometer output is depending on full scale range
-	// this means that if we lay the device level flat, x and y should be 0 and z should be the vlaue stored in accSensitivityScalingFactor
+	// this means that if we lay the device level flat, x and y should be 0 and z should be the value stored in accSensitivityScalingFactor
 	//
 	calibrateValueAccX = (ax / CALIBRATION_READINGS);
 	calibrateValueAccY = (ay / CALIBRATION_READINGS);
-	calibrateValueAccZ = (az / CALIBRATION_READINGS) - accSensitivityScalingFactor;
+	calibrateValueAccZ = (az / CALIBRATION_READINGS); // - accSensitivityScalingFactor;
+	
+	
+	Serial.print("accSensitivityScalingFactor: ");
+	Serial.print(accSensitivityScalingFactor);
+	Serial.print(" | gyroSensitivityScalingFactor: ");
+	Serial.print(gyroSensitivityScalingFactor);
+	
+	Serial.print(" | calibrateValueAccX: ");
+	Serial.print(calibrateValueAccX);
+	Serial.print(" | calibrateValueAccY: ");
+	Serial.print(calibrateValueAccY);
+	Serial.print(" | calibrateValueAccZ: ");
+	Serial.println(calibrateValueAccZ);
 
 }

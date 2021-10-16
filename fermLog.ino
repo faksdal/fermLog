@@ -14,8 +14,13 @@ void lcdPrint(bool clearScreen, int8_t x, int8_t y, int msg, uint16_t numberForm
 LiquidCrystal_I2C lcd(0x27,20,4);
 
 
-#define	MPU_6050_ADDRESS	0x68
-#define __LCD_PRESENT__		true
+#define __LCD_PRESENT__			true
+
+#define	MPU_6050_ADDRESS		0x68
+
+#define __GYRO_SENSITIVITY__	500
+#define __ACC_SENSITIVITY__		4
+
 
 mpu6050 mpu(MPU_6050_ADDRESS);
 
@@ -38,7 +43,7 @@ void setup()
 	}
 	
 	// initializing the MPU-6050 and tell the user if we're ok or not
-	if(!mpu.initMPU6050(250, 2)){
+	if(!mpu.initMPU6050(__GYRO_SENSITIVITY__, __ACC_SENSITIVITY__)){
 		if(__LCD_PRESENT__){
 			lcdPrint(true, 0, 0, "MPU found at");
 			lcdPrint(false, 0, 1, "hex 0x");
@@ -57,6 +62,38 @@ void setup()
 		}
 		return;
 	}
+
+	//set up the MPU-6050 to our use
+	//
+	//
+	// set FIFO register, p.16 https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf
+	//
+	// writing this to 0, no data in the FIFO buffer
+	mpu.setRegister(MPU6050_REG_FIFO_EN, 0);
+	delay(5);
+	//
+	// set CONFIG register, p.13 https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf
+	// DLPF_CFG is set to 6, this is the heaviest filter
+	mpu.setRegister(MPU6050_REG_CONFIG, 0b00000110);
+	delay(5);
+	//
+	// set SMPTR_DIV register, p.11 https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf
+	mpu.setRegister(MPU6050_REG_SMPTR_DIV, 0);
+	delay(5);
+	//
+	// set GYRO_CONFIG register, p.14 https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf
+	// bits 4 and 3 are set to 0, giving a full scale range of ±250°/s
+	// this gives an output of 131 per °/s of movement
+	// meaning we have to divide our reading with 131 to get degrees
+	mpu.setRegister(MPU6050_REG_GYRO_CONFIG, 0b00000000);
+	delay(5);
+	//
+	// set ACCEL_CONFIG register, p.15 https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf
+	// bits 4 and 3 are set to 0, giving a full scale range of 2g (1g equals 9.81 m/s²)
+	// this gives an output of 16384 for 1g of force
+	mpu.setRegister(MPU6050_REG_ACCEL_CONFIG, 0b00000000);
+	delay(5);
+	
 	lcd.clear();
 		
 	
